@@ -3,13 +3,17 @@ package com.cars.mappers;
 import com.cars.dto.CarDTO;
 import com.cars.entities.CarEntity;
 import com.cars.model.CarModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
 public class CarMapper {
+
     public CarEntity toEntity(CarModel carModel) {
         CarEntity carEntity = new CarEntity();
         carEntity.setBrand(carModel.getBrand());
@@ -30,4 +34,17 @@ public class CarMapper {
     public List<CarDTO> toListDTO(List<CarEntity> cars) {
         return cars.stream().map(this::toDTO).toList();
     }
+
+    public <T, U> Page<U> toPage(Page<T> sourcePage, Function<T, U> mapper) {
+        List<U> dtoList = sourcePage.getContent().stream()
+                .map(mapper)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(
+                dtoList,
+                sourcePage.getPageable(),
+                sourcePage.getTotalElements()
+        );
+    }
+
 }
