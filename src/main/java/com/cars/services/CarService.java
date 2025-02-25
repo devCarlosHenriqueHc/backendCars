@@ -1,17 +1,14 @@
 package com.cars.services;
 
-import com.cars.dto.CarDTO;
 import com.cars.entities.CarEntity;
 import com.cars.mappers.CarMapper;
 import com.cars.model.CarModel;
 import com.cars.repositories.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -30,4 +27,5 @@ public class CarService {
         CarEntity carEntity = carMapper.toEntity(carModel);
         carRepository.save(carEntity);
     }
+
 }

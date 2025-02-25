@@ -7,9 +7,10 @@ import com.cars.model.CarModel;
 import com.cars.services.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/api/v1/cars")
@@ -29,6 +30,17 @@ public class CarController {
     public ResponseEntity<Page<CarDTO>> addCar(@RequestBody CarModel carModel) {
         carService.addCar(carModel);
         Page<CarEntity> cars = carService.getAllCars(0, 10);
-        return ResponseEntity.ok(new PageImpl<>(carMapper.toListDTO(cars)));
+
+        Function<CarEntity, CarDTO> mapper = entity -> {
+            CarDTO carDTO = new CarDTO();
+            carDTO.setId(entity.getId());
+            carDTO.setBrand(entity.getBrand());
+            carDTO.setModel(entity.getModel());
+            carDTO.setModelYear(entity.getModelYear());
+            return carDTO;
+        };
+
+        return ResponseEntity.ok(carMapper.toPage(cars, mapper));
     }
+
 }
