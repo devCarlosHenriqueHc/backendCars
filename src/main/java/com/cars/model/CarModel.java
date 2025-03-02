@@ -12,5 +12,5 @@ import lombok.Setter;
 public class CarModel {
     private String brand;
     private String model;
-    private String modelYear;
+    private Integer modelYear;
 }

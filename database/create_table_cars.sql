@@ -5,7 +5,7 @@ CREATE TABLE Cars (
     id INT AUTO_INCREMENT PRIMARY KEY,
     brand VARCHAR(100) NOT NULL,
     model VARCHAR(50) NOT NULL,
-    modelYear VARCHAR(50) NOT NULL
+    model_year INT NOT NULL
 );
 
 DELIMITER //
@@ -14,7 +14,7 @@ CREATE PROCEDURE InsertCars()
 BEGIN
     DECLARE i INT DEFAULT 1;
     WHILE i <= 1000 DO
-        INSERT INTO cars (brand, model, modelYear)
+        INSERT INTO cars (brand, model, model_year)
         VALUES (
             CONCAT('Brand', i),
             CONCAT('Model', (i MOD 10 + 1)),

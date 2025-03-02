@@ -14,5 +14,5 @@ public class CarDTO {
 
     private String brand;
     private String model;
-    private String modelYear;
+    private Integer modelYear;
 }
